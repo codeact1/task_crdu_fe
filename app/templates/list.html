@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>Tasks</h1>
+
 <table class="table table-striped">
     <tr>
         <th>ID</th>
@@ -16,16 +17,18 @@
     </tr>
     {% for task in tasks %}
     <tr>
-        <td>{{task["id"] }}</td>
+        <td>{{ task['id'] }}</td>
         <td>
             <a href="{{ url_for('view_task_by_id', task_id=task['id']) }}">
                 {{ task["title"] }}
             </a>
         </td>
-        <td>{{task["subtitle"] }}</td>
-        <td>{{task["body"] }}</td>
-        <td>{{task["active"] }}</td>
-        <td>{{task["<i class="bi bi-trash-fill"></i>"]}} </td>
+        <td>{{ task['subtitle'] }}</td>
+        <td>{{ task['body'] }}</td>
+        <td>{{ task['active'] }}</td>
+        <td>
+            <button onclick="{{ url_for('delete_task', task_id=task['id']) }}" class="btn btn-danger">Delete</button>
+        </td>
     </tr>
     {% endfor %}
 </table>

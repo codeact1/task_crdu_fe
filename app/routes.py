@@ -51,3 +51,16 @@ def create_task():
         return render_template("create_success.html")
     else:
         return render_template("create_failure.html")
+
+@app.delete("/task/<int:task_id>")
+def delete_task(task_id):
+    url = "%s/%s" % (BACKEND_URL, task_id)
+    response = requests.delete(url)
+    if response.status_code == 204:
+        return render_template("delete_success.html")
+    else:
+        return render_template("delete_failure.html")
+
+    
+
+         
