@@ -30,7 +30,7 @@ def view_task_by_id(task_id):
     response = requests.get(url).json()
     return render_template(
             "detail.html",
-            task=response["tasks"]
+            task=response["task"]
     )
 
 
@@ -52,7 +52,7 @@ def create_task():
     else:
         return render_template("create_failure.html")
 
-@app.delete("/task/<int:task_id>")
+@app.get("/task/<int:task_id>/delete")
 def delete_task(task_id):
     url = "%s/%s" % (BACKEND_URL, task_id)
     response = requests.delete(url)
@@ -61,6 +61,28 @@ def delete_task(task_id):
     else:
         return render_template("delete_failure.html")
 
+@app.get("/task/<int:task_id>/update")
+def update_task_form(task_id):
+    url = "%s/%s" % (BACKEND_URL, task_id)
+    response = requests.get(url).json()
+    return render_template(
+            "update.html",
+            task=response["task"]
+    )
+    
+@app.post("/task/<int:task_id>/update")
+def update_task(task_id):
+    raw_data = request.form
+    task_json ={
+        "title": raw_data.get("title"),
+        "subtitle": raw_data.get("subtitle"),
+        "body": raw_data.get("body")
+    }
+    url = "%s/%s" % (BACKEND_URL, task_id)
+    response = requests.put(url, json=task_json)
+    if response.status_code == 201:
+        return render_template("update_success.html")
+    else:
+        return render_template("update_failure.html")
     
 
-         

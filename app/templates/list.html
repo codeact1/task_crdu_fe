@@ -12,6 +12,7 @@
         <th>subtitle</th>
         <th>Body</th>
         <th>Active</th>
+        <th>Update</th>
         <th>Delete</th>
 
     </tr>
@@ -27,9 +28,14 @@
         <td>{{ task['body'] }}</td>
         <td>{{ task['active'] }}</td>
         <td>
-            <button onclick="{{ url_for('delete_task', task_id=task['id']) }}" class="btn btn-danger">Delete</button>
+            <a href="{{ url_for('update_task', task_id=task['id']) }}" class="btn btn-primary">Update</a>
+        </td>
+        <td>
+            <a href="{{ url_for('delete_task', task_id=task['id']) }}" class="btn btn-danger">Delete</a>
+
         </td>
     </tr>
+
     {% endfor %}
 </table>
 {% endblock content %}
